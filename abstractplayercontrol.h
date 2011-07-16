@@ -69,6 +69,10 @@ public slots:
     virtual void play() = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
+    virtual void next() = 0;
+    virtual void prev() = 0;
+    virtual void closePlayer() = 0;
+    virtual void fullscreen() = 0;
     virtual void seek(qulonglong time) = 0;
     virtual void changeVolume(int volume) = 0;
     virtual void setParam(const QString &paramName, const QString &value) = 0;

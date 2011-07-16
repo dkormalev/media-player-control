@@ -104,7 +104,7 @@ Rectangle {
 
     Button {
         id: playButton
-        anchors.bottom: parent.bottom
+        anchors.bottom: closeButton.top
         anchors.left: parent.left
         anchors.margins: 15
         source: "qrc:/images/play.svg"
@@ -119,11 +119,47 @@ Rectangle {
 
     Button {
         id: stopButton
-        anchors.bottom: parent.bottom
+        anchors.bottom: closeButton.top
         anchors.left: playButton.right
         anchors.margins: 15
         source: "qrc:/images/stop.svg"
         onClicked: player.stop()
+    }
+
+    Button {
+        id: prevButton
+        anchors.bottom: closeButton.top
+        anchors.left: stopButton.right
+        anchors.margins: 15
+        source: "qrc:/images/prev.svg"
+        onClicked: player.prev()
+    }
+
+    Button {
+        id: nextButton
+        anchors.bottom: closeButton.top
+        anchors.left: prevButton.right
+        anchors.margins: 15
+        source: "qrc:/images/next.svg"
+        onClicked: player.next()
+    }
+
+    Button {
+        id: fullscreenButton
+        anchors.bottom: parent.bottom
+        anchors.right: closeButton.left
+        anchors.margins: 15
+        source: "qrc:/images/fullscreen.svg"
+        onClicked: player.fullscreen()
+    }
+
+    Button {
+        id: closeButton
+        anchors.bottom: parent.bottom
+        anchors.left: nextButton.left
+        anchors.bottomMargin: 15
+        source: "qrc:/images/close.svg"
+        onClicked: player.closePlayer()
     }
 
     Item {

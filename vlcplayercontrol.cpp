@@ -61,6 +61,8 @@ private:
 
     bool socketStillAlive();
 
+    void sendCommand(const QString &command, bool requestUpdate);
+
 public slots:
     void init();
     void runner(const QString &command, bool requestUpdate);
@@ -149,6 +151,17 @@ void VlcPlayerControlPrivate::runner(const QString &command, bool requestUpdate)
     if (requestUpdate)
         updateStatus();
     inNetworkRequest = false;
+}
+
+void VlcPlayerControlPrivate::sendCommand(const QString &command, bool requestUpdate)
+{
+    if (socket->state() != QAbstractSocket::ConnectedState)
+        return;
+    QMetaObject::invokeMethod(this, "runner",
+                              Qt::QueuedConnection,
+                              Q_ARG(QString, command),
+                              Q_ARG(bool, requestUpdate));
+
 }
 
 void VlcPlayerControlPrivate::updateStatus()
@@ -323,43 +336,57 @@ AbstractPlayerControl::PlayerState VlcPlayerControl::state() const
 void VlcPlayerControl::play()
 {
     Q_D(VlcPlayerControl);
-    if (d->socket->state() != QAbstractSocket::ConnectedState)
-        return;
-    QMetaObject::invokeMethod(d, "runner", Qt::QueuedConnection, Q_ARG(QString, "play"), Q_ARG(bool, true));
+    d->sendCommand("play", true);
 }
 
 void VlcPlayerControl::pause()
 {
     Q_D(VlcPlayerControl);
-    if (d->socket->state() != QAbstractSocket::ConnectedState)
-        return;
-    QMetaObject::invokeMethod(d, "runner", Qt::QueuedConnection, Q_ARG(QString, "pause"), Q_ARG(bool, true));
+    d->sendCommand("pause", true);
 }
 
 void VlcPlayerControl::stop()
 {
     Q_D(VlcPlayerControl);
-    if (d->socket->state() != QAbstractSocket::ConnectedState)
-        return;
-    QMetaObject::invokeMethod(d, "runner", Qt::QueuedConnection, Q_ARG(QString, "stop"), Q_ARG(bool, true));
+    d->sendCommand("stop", true);
+}
+
+void VlcPlayerControl::next()
+{
+    Q_D(VlcPlayerControl);
+    d->sendCommand("next", true);
+}
+
+void VlcPlayerControl::prev()
+{
+    Q_D(VlcPlayerControl);
+    d->sendCommand("prev", true);
+}
+
+void VlcPlayerControl::closePlayer()
+{
+    Q_D(VlcPlayerControl);
+    d->sendCommand("shutdown", false);
+}
+
+void VlcPlayerControl::fullscreen()
+{
+    Q_D(VlcPlayerControl);
+    d->sendCommand("fullscreen", false);
 }
 
 void VlcPlayerControl::seek(qulonglong time)
 {
     Q_D(VlcPlayerControl);
-    if (d->socket->state() != QAbstractSocket::ConnectedState)
-        return;
     if (time > d->totalTime)
         time = d->totalTime;
     d->manualSeek = true;
-    QMetaObject::invokeMethod(d, "runner", Qt::QueuedConnection, Q_ARG(QString, QString("seek %1").arg(time)), Q_ARG(bool, false));
+    d->sendCommand(QString("seek %1").arg(time), false);
 }
 
 void VlcPlayerControl::changeVolume(int volume)
 {
     Q_D(VlcPlayerControl);
-    if (d->socket->state() != QAbstractSocket::ConnectedState)
-        return;
     if (d->volume == volume)
         return;
     if (volume > 100)
@@ -367,7 +394,7 @@ void VlcPlayerControl::changeVolume(int volume)
     if (volume < 0)
         volume = 0;
     volume *= 5.12;
-    QMetaObject::invokeMethod(d, "runner", Qt::QueuedConnection, Q_ARG(QString, QString("volume %1").arg(volume)), Q_ARG(bool, false));
+    d->sendCommand(QString("volume %1").arg(volume), false);
 }
 
 QStringList VlcPlayerControl::params() const
@@ -410,7 +437,6 @@ void VlcPlayerControl::deInitPlayer()
     thread->quit();
     thread->deleteLater();
 }
-
 
 
 #include "vlcplayercontrol.moc"

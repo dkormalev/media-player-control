@@ -105,8 +105,8 @@ Rectangle {
     Button {
         id: playButton
         anchors.bottom: closeButton.top
-        anchors.left: parent.left
-        anchors.margins: 15
+        anchors.right: stopButton.left
+        anchors.margins: 16
         source: "qrc:/images/play.svg"
         onClicked: {
             if (player.state == AbstractPlayerControl.Playing)
@@ -120,8 +120,9 @@ Rectangle {
     Button {
         id: stopButton
         anchors.bottom: closeButton.top
-        anchors.left: playButton.right
-        anchors.margins: 15
+        anchors.right: parent.horizontalCenter
+        anchors.bottomMargin: 16
+        anchors.rightMargin: 8
         source: "qrc:/images/stop.svg"
         onClicked: player.stop()
     }
@@ -129,8 +130,9 @@ Rectangle {
     Button {
         id: prevButton
         anchors.bottom: closeButton.top
-        anchors.left: stopButton.right
-        anchors.margins: 15
+        anchors.left: parent.horizontalCenter
+        anchors.bottomMargin: 16
+        anchors.leftMargin: 8
         source: "qrc:/images/prev.svg"
         onClicked: player.prev()
     }
@@ -139,7 +141,7 @@ Rectangle {
         id: nextButton
         anchors.bottom: closeButton.top
         anchors.left: prevButton.right
-        anchors.margins: 15
+        anchors.margins: 16
         source: "qrc:/images/next.svg"
         onClicked: player.next()
     }
@@ -147,8 +149,9 @@ Rectangle {
     Button {
         id: fullscreenButton
         anchors.bottom: parent.bottom
-        anchors.right: closeButton.left
-        anchors.margins: 15
+        anchors.left: parent.horizontalCenter
+        anchors.bottomMargin: 16
+        anchors.leftMargin: 8
         source: "qrc:/images/fullscreen.svg"
         onClicked: player.fullscreen()
     }
@@ -156,8 +159,8 @@ Rectangle {
     Button {
         id: closeButton
         anchors.bottom: parent.bottom
-        anchors.left: nextButton.left
-        anchors.bottomMargin: 15
+        anchors.left: fullscreenButton.right
+        anchors.margins: 16
         source: "qrc:/images/close.svg"
         onClicked: player.closePlayer()
     }

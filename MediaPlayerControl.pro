@@ -60,3 +60,5 @@ OTHER_FILES += \
     qml/Button.qml \
     qml/VolumeSlider.qml \
     qml/TimeSlider.qml
+
+

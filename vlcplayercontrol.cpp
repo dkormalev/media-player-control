@@ -99,14 +99,12 @@ void VlcPlayerControlPrivate::init()
 
 bool VlcPlayerControlPrivate::connectToServer()
 {
-    qDebug() << Q_FUNC_INFO << hostName << port;
     socket->connectToHost(hostName, port);
     socket->waitForConnected(1000);
     if (socket->state() == QAbstractSocket::ConnectedState) {
         state = AbstractPlayerControl::Stopped;
         waitForPrompt();
         emit stateChanged(state);
-        qDebug() << Q_FUNC_INFO << "connected";
         return state != AbstractPlayerControl::NotConnected;
     } else {
         QTimer::singleShot(500, this, SLOT(connectToServer()));
@@ -118,7 +116,6 @@ bool VlcPlayerControlPrivate::connectToServer()
 bool VlcPlayerControlPrivate::socketStillAlive()
 {
     if (socket->state() != QAbstractSocket::ConnectedState) {
-        qDebug() << Q_FUNC_INFO << "disconnected";
         state = AbstractPlayerControl::NotConnected;
         emit stateChanged(state);
         QTimer::singleShot(0, this, SLOT(connectToServer()));
@@ -219,7 +216,6 @@ void VlcPlayerControlPrivate::updateStatus()
     QString rawCurrentTime = runCommand("get_time");
     qulonglong newCurrentTime = rawCurrentTime.toULongLong(&ok);
     if (ok) {
-        qDebug() << Q_FUNC_INFO << newCurrentTime << currentTime << state << newState << lastTimePauseCheck.msecsTo(QDateTime::currentDateTime());
         if (newCurrentTime == currentTime && lastTimePauseCheck.msecsTo(QDateTime::currentDateTime()) > 1100) {
             if (state == AbstractPlayerControl::Playing ||
                 (newState == AbstractPlayerControl::Playing && state == AbstractPlayerControl::Paused)) {

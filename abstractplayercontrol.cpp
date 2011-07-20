@@ -33,7 +33,6 @@ AbstractPlayerControl::AbstractPlayerControl(QObject *parent) : QObject(parent)
 void AbstractPlayerControl::init()
 {
     QSettings settings;
-    qDebug() << Q_FUNC_INFO << settings.fileName();
     QStringList paramsList = params();
     settings.beginGroup(playerName());
     foreach(const QString &paramName, paramsList)

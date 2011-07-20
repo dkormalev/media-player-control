@@ -31,6 +31,7 @@
 #include <QTimer>
 #include <QApplication>
 #include <QThread>
+#include <QDateTime>
 
 class VlcPlayerControlPrivate : public QObject
 {
@@ -49,7 +50,7 @@ private:
     QString fileName;
     AbstractPlayerControl::PlayerState state;
     int updateStatusTimerId;
-    bool possiblyPaused;
+    QDateTime lastTimePauseCheck;
     bool manualSeek;
 
     bool inNetworkRequest;
@@ -84,7 +85,7 @@ protected:
 VlcPlayerControlPrivate::VlcPlayerControlPrivate(VlcPlayerControl *control)
     :QObject(0), q_ptr(control), hostName("192.168.1.2"), port(14212),
       totalTime(0), currentTime(0), volume(0), state(AbstractPlayerControl::NotConnected),
-      possiblyPaused(false), manualSeek(false), inNetworkRequest(false)
+      lastTimePauseCheck(QDateTime::currentDateTime()), manualSeek(false), inNetworkRequest(false)
 {
 }
 
@@ -218,17 +219,15 @@ void VlcPlayerControlPrivate::updateStatus()
     QString rawCurrentTime = runCommand("get_time");
     qulonglong newCurrentTime = rawCurrentTime.toULongLong(&ok);
     if (ok) {
-        if (newCurrentTime == currentTime && possiblyPaused) {
-            if (state == AbstractPlayerControl::Playing) {
+        qDebug() << Q_FUNC_INFO << newCurrentTime << currentTime << state << newState << lastTimePauseCheck.msecsTo(QDateTime::currentDateTime());
+        if (newCurrentTime == currentTime && lastTimePauseCheck.msecsTo(QDateTime::currentDateTime()) > 1100) {
+            if (state == AbstractPlayerControl::Playing ||
+                (newState == AbstractPlayerControl::Playing && state == AbstractPlayerControl::Paused)) {
                 newState = AbstractPlayerControl::Paused;
             }
-        } else if (newCurrentTime == currentTime) {
-            if (state == AbstractPlayerControl::Playing) {
-                newState = AbstractPlayerControl::Playing;
-            }
-            possiblyPaused = true;
         } else {
-            possiblyPaused = false;
+            if (currentTime != newCurrentTime)
+                lastTimePauseCheck = QDateTime::currentDateTime();
             currentTime = newCurrentTime;
             emit currentTimeChanged(currentTime);
             if (manualSeek)

@@ -7,5 +7,7 @@
         <file>images/fullscreen.svg</file>
         <file>images/next.svg</file>
         <file>images/prev.svg</file>
+        <file>images/audio-stream.svg</file>
+        <file>images/subtitle-stream.svg</file>
     </qresource>
 </RCC>

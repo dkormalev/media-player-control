@@ -375,6 +375,18 @@ void VlcPlayerControl::fullscreen()
     d->sendCommand("fullscreen", false);
 }
 
+void VlcPlayerControl::nextAudioStream()
+{
+    Q_D(VlcPlayerControl);
+    d->sendCommand("key audio-track", false);
+}
+
+void VlcPlayerControl::nextSubtitleStream()
+{
+    Q_D(VlcPlayerControl);
+    d->sendCommand("key subtitle-track", false);
+}
+
 void VlcPlayerControl::seek(qulonglong time)
 {
     Q_D(VlcPlayerControl);
@@ -437,6 +449,7 @@ void VlcPlayerControl::deInitPlayer()
     thread->quit();
     thread->deleteLater();
 }
+
 
 
 #include "vlcplayercontrol.moc"

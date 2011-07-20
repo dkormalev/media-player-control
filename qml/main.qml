@@ -146,6 +146,27 @@ Rectangle {
         onClicked: player.next()
     }
 
+
+    Button {
+        id: cycleAudioStreamButton
+        anchors.bottom: parent.bottom
+        anchors.right: cycleSubtitleStreamButton.left
+        anchors.margins: 16
+        source: "qrc:/images/audio-stream.svg"
+        onClicked: player.nextAudioStream()
+    }
+
+
+    Button {
+        id: cycleSubtitleStreamButton
+        anchors.bottom: parent.bottom
+        anchors.right: parent.horizontalCenter
+        anchors.bottomMargin: 16
+        anchors.rightMargin: 8
+        source: "qrc:/images/subtitle-stream.svg"
+        onClicked: player.nextSubtitleStream()
+    }
+
     Button {
         id: fullscreenButton
         anchors.bottom: parent.bottom

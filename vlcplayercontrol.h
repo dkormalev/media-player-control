@@ -55,6 +55,8 @@ public slots:
     void prev();
     void closePlayer();
     void fullscreen();
+    void nextAudioStream();
+    void nextSubtitleStream();
     void seek(qulonglong time);
     void changeVolume(int volume);
     void setParam(const QString &paramName, const QString &value);

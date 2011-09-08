@@ -1,4 +1,4 @@
-VERSION = 0.2.2
+VERSION = 0.2.3
 
 QT += network declarative
 
@@ -59,6 +59,13 @@ OTHER_FILES += \
     qml/main.qml \
     qml/Button.qml \
     qml/VolumeSlider.qml \
-    qml/TimeSlider.qml
+    qml/TimeSlider.qml \
+    qtc_packaging/debian_harmattan/rules \
+    qtc_packaging/debian_harmattan/README \
+    qtc_packaging/debian_harmattan/copyright \
+    qtc_packaging/debian_harmattan/control \
+    qtc_packaging/debian_harmattan/compat \
+    qtc_packaging/debian_harmattan/changelog
+
 
 

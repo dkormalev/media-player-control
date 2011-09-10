@@ -102,7 +102,7 @@ Rectangle {
         onCurrentTimeUpdated: player.seek(currentTime)
     }
 
-    Button {
+    PlayerButton {
         id: playButton
         anchors.bottom: closeButton.top
         anchors.right: stopButton.left
@@ -117,7 +117,7 @@ Rectangle {
     }
 
 
-    Button {
+    PlayerButton {
         id: stopButton
         anchors.bottom: closeButton.top
         anchors.right: parent.horizontalCenter
@@ -127,7 +127,7 @@ Rectangle {
         onClicked: player.stop()
     }
 
-    Button {
+    PlayerButton {
         id: prevButton
         anchors.bottom: closeButton.top
         anchors.left: parent.horizontalCenter
@@ -137,7 +137,7 @@ Rectangle {
         onClicked: player.prev()
     }
 
-    Button {
+    PlayerButton {
         id: nextButton
         anchors.bottom: closeButton.top
         anchors.left: prevButton.right
@@ -147,7 +147,7 @@ Rectangle {
     }
 
 
-    Button {
+    PlayerButton {
         id: cycleAudioStreamButton
         anchors.bottom: parent.bottom
         anchors.right: cycleSubtitleStreamButton.left
@@ -157,7 +157,7 @@ Rectangle {
     }
 
 
-    Button {
+    PlayerButton {
         id: cycleSubtitleStreamButton
         anchors.bottom: parent.bottom
         anchors.right: parent.horizontalCenter
@@ -167,7 +167,7 @@ Rectangle {
         onClicked: player.nextSubtitleStream()
     }
 
-    Button {
+    PlayerButton {
         id: fullscreenButton
         anchors.bottom: parent.bottom
         anchors.left: parent.horizontalCenter
@@ -177,7 +177,7 @@ Rectangle {
         onClicked: player.fullscreen()
     }
 
-    Button {
+    PlayerButton {
         id: closeButton
         anchors.bottom: parent.bottom
         anchors.left: fullscreenButton.right

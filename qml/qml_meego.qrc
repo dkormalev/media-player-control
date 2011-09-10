@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
         <file>VolumeSlider.qml</file>
         <file>TimeSlider.qml</file>
+        <file alias="main.qml">main_meego.qml</file>
+        <file>ControlPage.qml</file>
         <file>PlayerButton.qml</file>
     </qresource>
 </RCC>

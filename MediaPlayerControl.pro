@@ -52,12 +52,20 @@ include(deployment.pri)
 qtcAddDeployment()
 
 RESOURCES += \
-    qml/qml.qrc \
     images.qrc
+
+symbian {
+RESOURCES += \
+    qml/qml.qrc
+} else {
+CONFIG += qdeclarative-boostable
+RESOURCES += \
+    qml/qml_meego.qrc
+}
 
 OTHER_FILES += \
     qml/main.qml \
-    qml/Button.qml \
+    qml/main_meego.qml \
     qml/VolumeSlider.qml \
     qml/TimeSlider.qml \
     qtc_packaging/debian_harmattan/rules \
@@ -65,7 +73,12 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/copyright \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
-    qtc_packaging/debian_harmattan/changelog
+    qtc_packaging/debian_harmattan/changelog \
+    qml/ControlPage.qml \
+    qml/PlayerButton.qml
+
+
+
 
 
 

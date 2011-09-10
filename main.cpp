@@ -22,17 +22,26 @@
 **
 **************************************************************************/
 
-#include "mainwindow.h"
 
 #include <QtGui/QApplication>
 #include <QTextCodec>
 
+#ifdef Q_OS_SYMBIAN
+# include "mainwindow.h"
+#else
+# include <QtDeclarative/QDeclarativeView>
+# include <QtDeclarative/QDeclarativeEngine>
+# include <MDeclarativeCache>
+# include "core.h"
+#endif
+
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
+#ifdef Q_OS_SYMBIAN
     QApplication app(argc, argv);
     app.setOrganizationName("DenisKormalev");
     app.setApplicationName("MediaPlayerControl");
-    app.setApplicationVersion("1.0");
+    app.setApplicationVersion("0.2.3");
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
 
@@ -43,4 +52,22 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     mainWindow.showExpanded();
 
     return app.exec();
+#else
+    QScopedPointer<QApplication> app(MDeclarativeCache::qApplication(argc, argv));
+    QScopedPointer<QDeclarativeView> view(MDeclarativeCache::qDeclarativeView());
+    app->setOrganizationName("DenisKormalev");
+    app->setApplicationName("MediaPlayerControl");
+    app->setApplicationVersion("0.2.3");
+
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
+
+    Core::instance()->setDeclarativeView(view.data());
+
+    view->setSource(QUrl("qrc:/main.qml"));
+    QObject::connect(view->engine(), SIGNAL(quit()), Core::instance(), SLOT(cleanup()));
+    QObject::connect(view->engine(), SIGNAL(quit()), view.data(), SLOT(close()));
+    view->showFullScreen();
+
+    return app->exec();
+#endif
 }

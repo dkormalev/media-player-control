@@ -93,7 +93,7 @@ Rectangle {
     Text {
         id: volumeLevel
         text: level+"%"
-        font.pixelSize: 30
+        font.pixelSize: parent.height/2
         anchors.margins: 15
         anchors.left: parent.left
         anchors.right: parent.right

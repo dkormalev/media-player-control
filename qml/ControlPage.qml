@@ -29,6 +29,9 @@ import MediaPlayerControl 1.0
 Page {
     property QtObject player: core.playerControl()
 
+    property int buttonMargin: 16
+    property int buttonWidth: 90
+
     tools: ToolBarLayout {
         Item{}
         ToolIcon {
@@ -100,7 +103,7 @@ Page {
             height: 50
             anchors.margins: 10
             color: "white"
-            font.pixelSize: 20
+            font.pixelSize: 24
             wrapMode: "Wrap"
             verticalAlignment: "AlignVCenter"
 
@@ -110,6 +113,7 @@ Page {
 
         VolumeSlider {
             id: volumeSlider
+            height: buttonWidth
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: titleTextItem.bottom
@@ -119,6 +123,7 @@ Page {
 
         TimeSlider {
             id: timeSlider
+            height: buttonWidth
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: volumeSlider.bottom
@@ -126,77 +131,128 @@ Page {
             onCurrentTimeUpdated: player.seek(currentTime)
         }
 
-        PlayerButton {
-            id: playButton
-            sourceSize.height: 80
-            anchors.bottom: cycleAudioStreamButton.top
-            anchors.right: stopButton.left
-            anchors.margins: 16
-            source: "qrc:/images/play.svg"
-            onClicked: {
-                if (player.state == AbstractPlayerControl.Playing)
-                    player.pause()
-                else
-                    player.play()
+        Item {
+            id: firstLineContainer
+            anchors.bottomMargin: buttonMargin*2
+            anchors.leftMargin: buttonMargin
+
+            width: buttonWidth*4 + buttonMargin*3
+            height: playButton.height
+
+            PlayerButton {
+                id: playButton
+                sourceSize.width: buttonWidth
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                source: "qrc:/images/play.svg"
+                onClicked: {
+                    if (player.state == AbstractPlayerControl.Playing)
+                        player.pause()
+                    else
+                        player.play()
+                }
+            }
+
+
+            PlayerButton {
+                id: stopButton
+                sourceSize.width: buttonWidth
+                anchors.bottom: parent.bottom
+                anchors.left: playButton.right
+                anchors.leftMargin: buttonMargin
+                source: "qrc:/images/stop.svg"
+                onClicked: player.stop()
+            }
+
+            PlayerButton {
+                id: prevButton
+                sourceSize.width: buttonWidth
+                anchors.bottom: parent.bottom
+                anchors.left: stopButton.right
+                anchors.leftMargin: buttonMargin
+                source: "qrc:/images/prev.svg"
+                onClicked: player.prev()
+            }
+
+            PlayerButton {
+                id: nextButton
+                sourceSize.width: buttonWidth
+                anchors.bottom: parent.bottom
+                anchors.left: prevButton.right
+                anchors.leftMargin: buttonMargin
+                source: "qrc:/images/next.svg"
+                onClicked: player.next()
+            }
+
+        }
+
+        Item {
+            id: secondLineContainer
+            anchors.bottomMargin: buttonMargin*2
+            anchors.rightMargin: buttonMargin
+            width: buttonWidth*2 + buttonMargin
+            height: cycleAudioStreamButton.height
+
+
+            PlayerButton {
+                id: cycleAudioStreamButton
+                sourceSize.width: buttonWidth
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                source: "qrc:/images/audio-stream.svg"
+                onClicked: player.nextAudioStream()
+            }
+
+
+            PlayerButton {
+                id: cycleSubtitleStreamButton
+                sourceSize.width: buttonWidth
+                anchors.bottom: parent.bottom
+                anchors.left: cycleAudioStreamButton.right
+                anchors.leftMargin: buttonMargin
+                source: "qrc:/images/subtitle-stream.svg"
+                onClicked: player.nextSubtitleStream()
             }
         }
 
 
-        PlayerButton {
-            id: stopButton
-            sourceSize.height: 80
-            anchors.bottom: cycleAudioStreamButton.top
-            anchors.right: parent.horizontalCenter
-            anchors.bottomMargin: 16
-            anchors.rightMargin: 8
-            source: "qrc:/images/stop.svg"
-            onClicked: player.stop()
-        }
-
-        PlayerButton {
-            id: prevButton
-            sourceSize.height: 80
-            anchors.bottom: cycleAudioStreamButton.top
-            anchors.left: parent.horizontalCenter
-            anchors.bottomMargin: 16
-            anchors.leftMargin: 8
-            source: "qrc:/images/prev.svg"
-            onClicked: player.prev()
-        }
-
-        PlayerButton {
-            id: nextButton
-            sourceSize.height: 80
-            anchors.bottom: cycleAudioStreamButton.top
-            anchors.left: prevButton.right
-            anchors.margins: 16
-            source: "qrc:/images/next.svg"
-            onClicked: player.next()
-        }
-
-
-        PlayerButton {
-            id: cycleAudioStreamButton
-            sourceSize.height: 80
-            anchors.bottom: parent.bottom
-            anchors.right: parent.horizontalCenter
-            anchors.bottomMargin: 16
-            anchors.rightMargin: 8
-            source: "qrc:/images/audio-stream.svg"
-            onClicked: player.nextAudioStream()
-        }
+        states: [
+            State {
+                name: "portraitMode"
+                when: appWindow.inPortrait
+                AnchorChanges {
+                    target: firstLineContainer
+                    anchors.bottom: secondLineContainer.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: undefined
+                }
+                AnchorChanges {
+                    target: secondLineContainer
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: undefined
+                }
+            },
+            State {
+                name: "landscapeMode"
+                when: !appWindow.inPortrait
+                AnchorChanges {
+                    target: firstLineContainer
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: undefined
+                    anchors.left: parent.left
+                }
+                AnchorChanges {
+                    target: secondLineContainer
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: undefined
+                    anchors.right: parent.right
+                }
+            }
 
 
-        PlayerButton {
-            id: cycleSubtitleStreamButton
-            sourceSize.height: 80
-            anchors.bottom: parent.bottom
-            anchors.left: parent.horizontalCenter
-            anchors.bottomMargin: 16
-            anchors.leftMargin: 8
-            source: "qrc:/images/subtitle-stream.svg"
-            onClicked: player.nextSubtitleStream()
-        }
+        ]
+
 
 
         Item {
@@ -214,7 +270,7 @@ Page {
                 verticalAlignment: "AlignVCenter"
                 color: "white"
                 text: "Not Connected"
-                font.pixelSize: 20
+                font.pixelSize: 24
             }
             MouseArea{
                 anchors.fill: parent

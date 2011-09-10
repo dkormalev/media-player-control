@@ -85,13 +85,31 @@ Rectangle {
     }
 
     Text {
-        id: timeTextItem
-        text: core.humanizedTime(currentTime)+"<br />"+core.humanizedTime(totalTime)
-        font.pixelSize: 22
-        anchors.margins: 15
+        id: currentTimeTextItem
+        text: core.humanizedTime(currentTime)
+        font.pixelSize: (parent.height-22)/2
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
+        anchors.topMargin: 15
+        anchors.bottomMargin: 1
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.bottom: parent.verticalCenter
+        horizontalAlignment: (currentTime<(totalTime/2)) ? "AlignRight" : "AlignLeft"
+        color: (currentTime<(totalTime/2)) ? "white" : "black"
+    }
+
+    Text {
+        id: totalTimeTextItem
+        text: core.humanizedTime(totalTime)
+        font.pixelSize: (parent.height-22)/2
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
+        anchors.bottomMargin: 15
+        anchors.topMargin: 1
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.verticalCenter
         horizontalAlignment: (currentTime<(totalTime/2)) ? "AlignRight" : "AlignLeft"
         color: (currentTime<(totalTime/2)) ? "white" : "black"
     }

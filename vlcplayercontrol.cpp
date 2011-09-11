@@ -421,8 +421,10 @@ void VlcPlayerControl::setNetworkParams(const QString &host, int port)
     Q_D(VlcPlayerControl);
     d->hostName = host;
     d->port = port;
-    saveNetworkParams();
-    d->socket->disconnectFromHost();
+    if (isInitFinished()) {
+        saveNetworkParams();
+        d->socket->disconnectFromHost();
+    }
 }
 
 

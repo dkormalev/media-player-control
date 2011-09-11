@@ -53,6 +53,7 @@ public:
 
     void init();
     void deInit();
+    inline bool isInitFinished() {return m_initFinished;}
 
     Q_INVOKABLE virtual QString playerName() const = 0;
 
@@ -91,6 +92,9 @@ protected:
     virtual void initPlayer() = 0;
     virtual void deInitPlayer() = 0;
     void saveNetworkParams();
+
+private:
+    bool m_initFinished;
 
 };
 

@@ -26,7 +26,8 @@
 #include <QSettings>
 #include <QDebug>
 
-AbstractPlayerControl::AbstractPlayerControl(QObject *parent) : QObject(parent)
+AbstractPlayerControl::AbstractPlayerControl(QObject *parent)
+    : QObject(parent), m_initFinished(false)
 {
 }
 
@@ -37,6 +38,7 @@ void AbstractPlayerControl::init()
     setNetworkParams(settings.value("host", "").toString(), settings.value("port", 0).toInt());
     settings.endGroup();
     initPlayer();
+    m_initFinished = true;
 }
 
 void AbstractPlayerControl::deInit()

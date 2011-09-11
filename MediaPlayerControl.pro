@@ -54,7 +54,7 @@ RESOURCES += \
 
 symbian {
     RESOURCES += \
-        qml/qml.qrc
+        qml/qml_symbian.qrc
 } else {
     CONFIG += qdeclarative-boostable
     RESOURCES += \
@@ -62,8 +62,8 @@ symbian {
 }
 
 OTHER_FILES += \
-    qml/main.qml \
-    qml/main_meego.qml \
+    qml/symbian/main.qml \
+    qml/meego/main.qml \
     qml/VolumeSlider.qml \
     qml/TimeSlider.qml \
     qtc_packaging/debian_harmattan/rules \
@@ -72,9 +72,9 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/control \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
-    qml/ControlPage.qml \
+    qml/meego/ControlPage.qml \
     qml/PlayerButton.qml \
-    qml/SettingsPage.qml
+    qml/meego/SettingsPage.qml
 
 
 

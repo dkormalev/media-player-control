@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file alias="main.qml">symbian/main.qml</file>
         <file>VolumeSlider.qml</file>
         <file>TimeSlider.qml</file>
         <file>PlayerButton.qml</file>

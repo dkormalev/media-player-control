@@ -2,9 +2,9 @@
     <qresource prefix="/">
         <file>VolumeSlider.qml</file>
         <file>TimeSlider.qml</file>
-        <file alias="main.qml">main_meego.qml</file>
-        <file>ControlPage.qml</file>
         <file>PlayerButton.qml</file>
-        <file>SettingsPage.qml</file>
+        <file alias="main.qml">meego/main.qml</file>
+        <file alias="ControlPage.qml">meego/ControlPage.qml</file>
+        <file alias="SettingsPage.qml">meego/SettingsPage.qml</file>
     </qresource>
 </RCC>

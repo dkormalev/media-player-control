@@ -23,15 +23,16 @@
 **************************************************************************/
 
 import QtQuick 1.1
-import com.meego 1.0
+import com.nokia.symbian 1.0
 import MediaPlayerControl 1.0
 
 Page {
     property QtObject player: core.playerControl()
 
+    //HACK: we use full path to predefined image here because of bug while using qml in qrc
     tools: ToolBarLayout {
-        ToolIcon {
-            iconId: "toolbar-back"
+        ToolButton {
+            iconSource: "image://theme/toolbar-back"
             onClicked:  {
                 player.setNetworkParams(hostField.text, (portField.text)*1)
                 pageStack.pop()
@@ -43,13 +44,14 @@ Page {
         color: "black"
         anchors.fill: parent
 
-        Label {
+        Text {
             id: hostLabel
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 5
             text: "Host:"
+            font.pixelSize: 20
             color: "white"
         }
         TextField {
@@ -62,13 +64,14 @@ Page {
             anchors.right: parent.right
             anchors.margins: 5
         }
-        Label {
+        Text {
             id: portLabel
             anchors.top: hostField.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 5
             text: "Port:"
+            font.pixelSize: 20
             color: "white"
         }
         TextField {

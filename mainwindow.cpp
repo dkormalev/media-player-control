@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     addAction(hideAction);
 #else
     QMenu *fileMenu = menuBar()->addMenu("File");
-    fileMenu->addAction("Settings", this, SLOT(showSettings()));
+    //fileMenu->addAction("Settings", this, SLOT(showSettings()));
     fileMenu->addAction("Quit", this, SLOT(quitApplication()));
 #endif
 
@@ -106,8 +106,8 @@ void MainWindow::setOrientation(ScreenOrientation orientation)
 
 void MainWindow::showExpanded()
 {
-#ifdef Q_OS_SYMBIAN
-    showMaximized();
+#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
+    showFullScreen();
 #elif defined(Q_WS_MAEMO_5)
     showMaximized();
 #else

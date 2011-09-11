@@ -26,7 +26,7 @@
 #include <QtGui/QApplication>
 #include <QTextCodec>
 
-#ifdef Q_OS_SYMBIAN
+#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
 # include "mainwindow.h"
 #else
 # include <QtDeclarative/QDeclarativeView>
@@ -37,7 +37,7 @@
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-#ifdef Q_OS_SYMBIAN
+#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
     QApplication app(argc, argv);
     app.setOrganizationName("DenisKormalev");
     app.setApplicationName("MediaPlayerControl");
@@ -46,7 +46,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
 
     MainWindow mainWindow;
-    mainWindow.setOrientation(MainWindow::ScreenOrientationLockPortrait);
+//    mainWindow.setOrientation(MainWindow::ScreenOrientationLockPortrait);
     mainWindow.setupCore();
     mainWindow.setSource(QUrl("qrc:/main.qml"));
     mainWindow.showExpanded();

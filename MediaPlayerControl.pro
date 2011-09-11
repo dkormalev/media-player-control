@@ -52,7 +52,7 @@ qtcAddDeployment()
 RESOURCES += \
     images.qrc
 
-symbian {
+symbian|simulator {
     RESOURCES += \
         qml/qml_symbian.qrc
 } else {
@@ -74,7 +74,11 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/changelog \
     qml/meego/ControlPage.qml \
     qml/PlayerButton.qml \
-    qml/meego/SettingsPage.qml
+    qml/meego/SettingsPage.qml \
+    qml/symbian/ControlPage.qml \
+    qml/symbian/SettingsPage.qml
+
+
 
 
 

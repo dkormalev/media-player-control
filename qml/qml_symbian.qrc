@@ -4,5 +4,7 @@
         <file>VolumeSlider.qml</file>
         <file>TimeSlider.qml</file>
         <file>PlayerButton.qml</file>
+        <file alias="ControlPage.qml">symbian/ControlPage.qml</file>
+        <file alias="SettingsPage.qml">symbian/SettingsPage.qml</file>
     </qresource>
 </RCC>

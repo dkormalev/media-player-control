@@ -26,38 +26,27 @@
 #include <QtGui/QApplication>
 #include <QTextCodec>
 
-#if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-# include "mainwindow.h"
-#else
-# include <QtDeclarative/QDeclarativeView>
-# include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeView>
+#include <QtDeclarative/QDeclarativeEngine>
+#include "core.h"
+
+#if !defined(Q_OS_SYMBIAN) && !defined(Q_WS_SIMULATOR)
 # include <MDeclarativeCache>
-# include "core.h"
 #endif
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
 #if defined(Q_OS_SYMBIAN) || defined(Q_WS_SIMULATOR)
-    QApplication app(argc, argv);
-    app.setOrganizationName("DenisKormalev");
-    app.setApplicationName("MediaPlayerControl");
-    app.setApplicationVersion("0.2.3");
-
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
-
-    MainWindow mainWindow;
-//    mainWindow.setOrientation(MainWindow::ScreenOrientationLockPortrait);
-    mainWindow.setupCore();
-    mainWindow.setSource(QUrl("qrc:/main.qml"));
-    mainWindow.showExpanded();
-
-    return app.exec();
+    QScopedPointer<QApplication> app(new QApplication(argc, argv));
+    QScopedPointer<QDeclarativeView> view(new QDeclarativeView());
 #else
     QScopedPointer<QApplication> app(MDeclarativeCache::qApplication(argc, argv));
     QScopedPointer<QDeclarativeView> view(MDeclarativeCache::qDeclarativeView());
+#endif
+
     app->setOrganizationName("DenisKormalev");
     app->setApplicationName("MediaPlayerControl");
-    app->setApplicationVersion("0.2.3");
+    app->setApplicationVersion("0.3.0");
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
 
@@ -69,5 +58,4 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     view->showFullScreen();
 
     return app->exec();
-#endif
 }

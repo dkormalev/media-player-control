@@ -26,6 +26,11 @@
 #include <QtDeclarative>
 #include "vlcplayercontrol.h"
 
+#ifdef Q_OS_SYMBIAN
+# include <w32std.h>
+# include <mw/coemain.h>
+#endif
+
 Core *Core::m_instance = 0;
 
 Core::Core(QObject *parent) :
@@ -75,6 +80,14 @@ void Core::cleanup()
     foreach(const QString &playerName, m_playerControls.keys()) {
         m_playerControls[playerName]->deInit();
     }
+}
+
+void Core::hideApplication()
+{
+#ifdef Q_OS_SYMBIAN
+    RWindowGroup* wg = &CCoeEnv::Static()->RootWin();
+    wg->SetOrdinalPosition(-1);
+#endif
 }
 
 QString Core::humanizedTime(qulonglong time)

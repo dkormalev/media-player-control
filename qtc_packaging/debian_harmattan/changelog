@@ -1,5 +1,9 @@
-mediaplayercontrol (0.2.3) unstable; urgency=low
+mediaplayercontrol (0.3.0) unstable; urgency=low
 
-  * Initial Release for MeeGo Harmattan platform.
+  * MeeGo Harmattan UI
+  * Symbian UI moved to Qt Components
+  * Auto reconnect added
+  * Close and Fullscreen features moved to Menu
+  * Landscape mode
 
  -- Denis Kormalev <kormalev.denis@gmail.com>  Thu, 08 Sep 2011 23:30:40 +0400

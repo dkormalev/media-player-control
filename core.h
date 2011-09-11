@@ -49,6 +49,9 @@ signals:
 public slots:
     void cleanup();
 
+    //Platform-specific methods
+    void hideApplication();
+
 private:
     explicit Core(QObject *parent = 0);
     Q_DISABLE_COPY(Core)

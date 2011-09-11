@@ -36,7 +36,7 @@ Page {
     tools: ToolBarLayout {
         ToolButton {
             iconSource: "image://theme/toolbar-home"
-            onClicked: console.log("Hide function will be implemented later")
+            onClicked: core.hideApplication()
         }
         ToolButton {
             iconSource: "image://theme/toolbar-menu"

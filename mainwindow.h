@@ -55,7 +55,6 @@ public:
     void setupCore();
 
 private slots:
-    void showSettings();
     void quitApplication();
     void hideApplication();
 

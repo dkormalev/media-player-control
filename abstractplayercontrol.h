@@ -61,8 +61,8 @@ public:
     virtual int volume() const = 0;
     virtual QString fileName() const = 0;
     virtual AbstractPlayerControl::PlayerState state() const = 0;
-    Q_INVOKABLE virtual QStringList params() const = 0;
-    Q_INVOKABLE virtual QString param(const QString &paramName) const = 0;
+    Q_INVOKABLE virtual QString host() const = 0;
+    Q_INVOKABLE virtual int port() const = 0;
 
 
 public slots:
@@ -77,7 +77,7 @@ public slots:
     virtual void nextSubtitleStream() = 0;
     virtual void seek(qulonglong time) = 0;
     virtual void changeVolume(int volume) = 0;
-    virtual void setParam(const QString &paramName, const QString &value) = 0;
+    virtual void setNetworkParams(const QString &host, int port) = 0;
 
 
 signals:
@@ -90,6 +90,7 @@ signals:
 protected:
     virtual void initPlayer() = 0;
     virtual void deInitPlayer() = 0;
+    void saveNetworkParams();
 
 };
 

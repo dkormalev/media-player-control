@@ -404,31 +404,28 @@ void VlcPlayerControl::changeVolume(int volume)
     d->sendCommand(QString("volume %1").arg(volume), false);
 }
 
-QStringList VlcPlayerControl::params() const
-{
-    QStringList result;
-    result << "Host" << "Port";
-    return result;
-}
-
-void VlcPlayerControl::setParam(const QString &paramName, const QString &value)
-{
-    Q_D(VlcPlayerControl);
-    if (paramName == "Host")
-        d->hostName = value;
-    else if (paramName == "Port")
-        d->port = value.toUInt();
-}
-
-QString VlcPlayerControl::param(const QString &paramName) const
+QString VlcPlayerControl::host() const
 {
     Q_D(const VlcPlayerControl);
-    if (paramName == "Host")
-        return d->hostName;
-    else if (paramName == "Port")
-        return QString::number(d->port);
-    return "";
+    return d->hostName;
 }
+
+int VlcPlayerControl::port() const
+{
+    Q_D(const VlcPlayerControl);
+    return d->port;
+}
+
+void VlcPlayerControl::setNetworkParams(const QString &host, int port)
+{
+    Q_D(VlcPlayerControl);
+    d->hostName = host;
+    d->port = port;
+    saveNetworkParams();
+    d->socket->disconnectFromHost();
+}
+
+
 
 void VlcPlayerControl::initPlayer()
 {

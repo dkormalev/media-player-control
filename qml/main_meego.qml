@@ -34,4 +34,7 @@ PageStackWindow {
         id: controlPage
     }
 
+    SettingsPage {
+        id: settingsPage
+    }
 }

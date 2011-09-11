@@ -44,7 +44,7 @@ Page {
         id: controlMenu
         visualParent: pageStack
         MenuLayout {
-            MenuItem {text: "Settings"; onClicked: { console.log("Settings called") } }
+            MenuItem {text: "Settings"; onClicked: { pageStack.push(settingsPage) } }
             MenuItem {text: "Fullscreen Player"; onClicked: { player.fullscreen() }}
             MenuItem {text: "Close Player"; onClicked: { player.closePlayer() }}
         }

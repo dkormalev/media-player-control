@@ -5,5 +5,6 @@
         <file alias="main.qml">main_meego.qml</file>
         <file>ControlPage.qml</file>
         <file>PlayerButton.qml</file>
+        <file>SettingsPage.qml</file>
     </qresource>
 </RCC>

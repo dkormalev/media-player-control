@@ -44,8 +44,8 @@ public:
     int volume() const;
     QString fileName() const;
     AbstractPlayerControl::PlayerState state() const;
-    Q_INVOKABLE QStringList params() const;
-    Q_INVOKABLE QString param(const QString &paramName) const;
+    Q_INVOKABLE QString host() const;
+    Q_INVOKABLE int port() const;
 
 public slots:
     void play();
@@ -59,7 +59,7 @@ public slots:
     void nextSubtitleStream();
     void seek(qulonglong time);
     void changeVolume(int volume);
-    void setParam(const QString &paramName, const QString &value);
+    void setNetworkParams(const QString &host, int port);
 
 protected:
     void initPlayer();

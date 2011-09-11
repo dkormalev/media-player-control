@@ -25,7 +25,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "core.h"
-#include "settingsdialog.h"
 
 #include <QtCore/QCoreApplication>
 #include <QDeclarativeView>
@@ -125,13 +124,6 @@ void MainWindow::setupCore()
 {
     Core::instance()->setDeclarativeView(ui->centralWidget);
     connect(qApp, SIGNAL(destroyed()), Core::instance(), SLOT(cleanup()));
-}
-
-void MainWindow::showSettings()
-{
-    SettingsDialog settingsDialog;
-    settingsDialog.initDialog();
-    settingsDialog.exec();
 }
 
 void MainWindow::quitApplication()

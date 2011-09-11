@@ -38,14 +38,12 @@ symbian {
 SOURCES += main.cpp mainwindow.cpp \
     vlcplayercontrol.cpp \
     core.cpp \
-    abstractplayercontrol.cpp \
-    settingsdialog.cpp
+    abstractplayercontrol.cpp
 HEADERS += mainwindow.h \
     vlcplayercontrol.h \
     core.h \
-    abstractplayercontrol.h \
-    settingsdialog.h
-FORMS += mainwindow.ui
+    abstractplayercontrol.h
+FORMS +=
 
 # Please do not modify the following two lines. Required for deployment.
 include(deployment.pri)
@@ -55,12 +53,12 @@ RESOURCES += \
     images.qrc
 
 symbian {
-RESOURCES += \
-    qml/qml.qrc
+    RESOURCES += \
+        qml/qml.qrc
 } else {
-CONFIG += qdeclarative-boostable
-RESOURCES += \
-    qml/qml_meego.qrc
+    CONFIG += qdeclarative-boostable
+    RESOURCES += \
+        qml/qml_meego.qrc
 }
 
 OTHER_FILES += \
@@ -75,7 +73,12 @@ OTHER_FILES += \
     qtc_packaging/debian_harmattan/compat \
     qtc_packaging/debian_harmattan/changelog \
     qml/ControlPage.qml \
-    qml/PlayerButton.qml
+    qml/PlayerButton.qml \
+    qml/SettingsPage.qml
+
+
+
+
 
 
 

@@ -33,10 +33,8 @@ AbstractPlayerControl::AbstractPlayerControl(QObject *parent) : QObject(parent)
 void AbstractPlayerControl::init()
 {
     QSettings settings;
-    QStringList paramsList = params();
     settings.beginGroup(playerName());
-    foreach(const QString &paramName, paramsList)
-        setParam(paramName, settings.value(paramName, QString("")).toString());
+    setNetworkParams(settings.value("host", "").toString(), settings.value("port", 0).toInt());
     settings.endGroup();
     initPlayer();
 }
@@ -44,11 +42,15 @@ void AbstractPlayerControl::init()
 void AbstractPlayerControl::deInit()
 {
     deInitPlayer();
+    saveNetworkParams();
+}
+
+void AbstractPlayerControl::saveNetworkParams()
+{
     QSettings settings;
-    QStringList paramsList = params();
     settings.beginGroup(playerName());
-    foreach(const QString &paramName, paramsList)
-        settings.setValue(paramName, param(paramName));
+    settings.setValue("host", host());
+    settings.setValue("port", port());
     settings.endGroup();
 }
 

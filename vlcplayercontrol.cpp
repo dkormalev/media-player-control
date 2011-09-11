@@ -67,6 +67,7 @@ private:
 public slots:
     void init();
     void runner(const QString &command, bool requestUpdate);
+    void disconnectFromHost();
     bool connectToServer();
 
 signals:
@@ -148,6 +149,17 @@ void VlcPlayerControlPrivate::runner(const QString &command, bool requestUpdate)
     runCommand(command);
     if (requestUpdate)
         updateStatus();
+    inNetworkRequest = false;
+}
+
+void VlcPlayerControlPrivate::disconnectFromHost()
+{
+    while (inNetworkRequest) {
+        QApplication::processEvents();
+        QThread::yieldCurrentThread();
+    }
+    inNetworkRequest = true;
+    socket->disconnectFromHost();
     inNetworkRequest = false;
 }
 
@@ -423,7 +435,9 @@ void VlcPlayerControl::setNetworkParams(const QString &host, int port)
     d->port = port;
     if (isInitFinished()) {
         saveNetworkParams();
-        d->socket->disconnectFromHost();
+        if (d->socket->state() == QAbstractSocket::ConnectedState) {
+            QMetaObject::invokeMethod(d, "disconnectFromHost", Qt::QueuedConnection);
+        }
     }
 }
 

@@ -30,6 +30,8 @@ PageStackWindow {
 
     initialPage: controlPage
 
+    Component.onCompleted: theme.inverted = true
+
     ControlPage {
         id: controlPage
     }

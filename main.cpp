@@ -46,7 +46,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     app->setOrganizationName("DenisKormalev");
     app->setApplicationName("MediaPlayerControl");
-    app->setApplicationVersion("0.3.0");
+    app->setApplicationVersion("0.3.1");
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("utf8"));
 

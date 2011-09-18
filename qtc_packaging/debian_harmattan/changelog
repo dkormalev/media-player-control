@@ -1,9 +1,6 @@
-mediaplayercontrol (0.3.0) unstable; urgency=low
+mediaplayercontrol (0.3.1) unstable; urgency=low
 
-  * MeeGo Harmattan UI
-  * Symbian UI moved to Qt Components
-  * Auto reconnect added
-  * Close and Fullscreen features moved to Menu
-  * Landscape mode
+  * Dark toolbar for MeeGo Harmattan
+  * Screensaver inhibiting
 
  -- Denis Kormalev <kormalev.denis@gmail.com>  Thu, 08 Sep 2011 23:30:40 +0400

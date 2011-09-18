@@ -29,9 +29,12 @@
 #include <QMetaType>
 #include <QMap>
 #include <QStringList>
+#include <QSystemScreenSaver>
 
 class QDeclarativeView;
 class AbstractPlayerControl;
+
+QTM_USE_NAMESPACE
 
 class Core : public QObject
 {
@@ -58,6 +61,10 @@ private:
     static Core *m_instance;
     QDeclarativeView *m_view;
     QMap<QString, AbstractPlayerControl *> m_playerControls;
+    QSystemScreenSaver m_screenSaver;
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *ev);
 };
 
 #endif // CORE_H

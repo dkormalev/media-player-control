@@ -52,10 +52,13 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     Core::instance()->setDeclarativeView(view.data());
 
+    view->installEventFilter(Core::instance());
+
     view->setSource(QUrl("qrc:/main.qml"));
     QObject::connect(view->engine(), SIGNAL(quit()), Core::instance(), SLOT(cleanup()));
     QObject::connect(view->engine(), SIGNAL(quit()), view.data(), SLOT(close()));
     view->showFullScreen();
+
 
     return app->exec();
 }

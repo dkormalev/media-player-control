@@ -108,3 +108,14 @@ QString Core::humanizedTime(qulonglong time)
     return result;
 
 }
+
+bool Core::eventFilter(QObject *obj, QEvent *ev)
+{
+    if (obj != m_view)
+        return false;
+    if (ev->type() == QEvent::WindowActivate)
+        m_screenSaver.setScreenSaverInhibited(true);
+    else if (ev->type() == QEvent::WindowDeactivate)
+        m_screenSaver.setScreenSaverInhibited(false);
+    return false;
+}
